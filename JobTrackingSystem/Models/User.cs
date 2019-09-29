@@ -7,7 +7,7 @@ namespace JobTrackingSystem.Models
 {
     public class User
     {
-        private int Id { get; set; }
+        public int Id { get; set; }
         private string first_name { get; set; }
         private string last_name { get; set; }
         private string nickname { get; set; }

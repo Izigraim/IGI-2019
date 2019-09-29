@@ -14,5 +14,6 @@ namespace JobTrackingSystem.Models
         }
 
         public DbSet<JobTrackingSystem.Models.TrackingTask> TrackingTask { get; set; }
+        public DbSet<JobTrackingSystem.Models.User> User { get; set; }
     }
 }

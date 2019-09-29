@@ -13,6 +13,6 @@ namespace JobTrackingSystem.Data
         {
 
         }
-        public DbSet<TrackingTask> trackingTasks { get; set; }
+        public DbSet<TrackingTask> TrackingTask { get; set; }
     }
 }

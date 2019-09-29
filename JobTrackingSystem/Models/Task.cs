@@ -14,5 +14,6 @@ namespace JobTrackingSystem.Models
         private string status { get; set; }
         private string dateOfTaking { get; set; }
         private string dateOfFinishing { get; set; }
+
     }
 }

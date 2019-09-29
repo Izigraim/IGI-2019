@@ -8,6 +8,7 @@ namespace JobTrackingSystem.Models
 {
     public class TrackingTask
     {
+        public int Id { get; set; }
         private User whoGave { get; set; }
         private User whoTake { get; set; }
         private string taskName { get; set; }

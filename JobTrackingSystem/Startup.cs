@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using JobTrackingSystem.Data;
 using Microsoft.EntityFrameworkCore;
+using JobTrackingSystem.Models;
 
 namespace JobTrackingSystem
 {
@@ -40,6 +41,9 @@ namespace JobTrackingSystem
                         options.UseSqlServer(Configuration.GetConnectionString("TaskContext")));
             services.AddDbContext<UserContext>(options =>
                         options.UseSqlServer(Configuration.GetConnectionString("UserContext")));
+
+            services.AddDbContext<JobTrackingSystemContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("JobTrackingSystemContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,7 +6,7 @@ using JobTrackingSystem.Models;
 
 namespace JobTrackingSystem.Models
 {
-    public class Task
+    public class TrackingTask
     {
         private User whoGave { get; set; }
         private User whoTake { get; set; }

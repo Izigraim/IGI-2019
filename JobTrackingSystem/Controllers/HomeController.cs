@@ -21,5 +21,10 @@ namespace JobTrackingSystem.Controllers
         {
             return View(_context.TrackingTasks.ToList());
         } 
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }

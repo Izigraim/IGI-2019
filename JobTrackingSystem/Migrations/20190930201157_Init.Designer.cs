@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobTrackingSystem.Migrations
 {
     [DbContext(typeof(TaskContext))]
-    [Migration("20190930195523_Init")]
+    [Migration("20190930201157_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace JobTrackingSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("dateOfFinishing");
+                    b.Property<DateTime?>("dateOfFinishing");
 
                     b.Property<DateTime>("dateOfTaking");
 

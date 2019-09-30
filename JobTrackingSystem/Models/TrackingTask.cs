@@ -17,7 +17,7 @@ namespace JobTrackingSystem.Models
         [DataType(DataType.Date)]
         public DateTime dateOfTaking { get; set; }
         [DataType(DataType.Date)]
-        public DateTime dateOfFinishing { get; set; }
+        public DateTime? dateOfFinishing { get; set; }
 
     }
 }

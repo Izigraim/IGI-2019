@@ -19,7 +19,7 @@ namespace JobTrackingSystem.Migrations
                     taskName = table.Column<string>(nullable: true),
                     status = table.Column<string>(nullable: true),
                     dateOfTaking = table.Column<DateTime>(nullable: false),
-                    dateOfFinishing = table.Column<DateTime>(nullable: false)
+                    dateOfFinishing = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {

@@ -9,6 +9,9 @@
 </head>
 <body>
     <h3>Список заданий</h3>
+    <div>
+        <a asp-action="Create">Добавить новое задание</a>
+    </div>
     <table>
         <tr>
             <td>Задание</td>
@@ -20,14 +23,14 @@
         </tr>
         @foreach (var task in Model)
         {
-        <tr>
-            <td>@task.taskName</td>
-            <td>@task.status</td>
-            <td>@task.whoGave</td>
-            <td>@task.dateOfTaking</td>
-            <td>@task.whoTake</td>
-            <td>@task.dateOfFinishing</td>
-        </tr>
+            <tr>
+                <td>@task.taskName</td>
+                <td>@task.status</td>
+                <td>@task.whoGave</td>
+                <td>@task.dateOfTaking</td>
+                <td>@task.whoTake</td>
+                <td>@task.dateOfFinishing</td>
+            </tr>
         }
     </table>
 </body>

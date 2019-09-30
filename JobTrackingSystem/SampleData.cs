@@ -45,7 +45,7 @@ namespace JobTrackingSystem
                         whoGave = context.Users.First().nickname,
                         whoTake = context.Users.Last().nickname,
                         dateOfTaking = DateTime.Parse("2019-9-25"),
-                        dateOfFinishing = DateTime.Parse("2019-9-26")
+                        dateOfFinishing = null
 
                     },
                     new TrackingTask
@@ -64,7 +64,7 @@ namespace JobTrackingSystem
                         whoGave = context.Users.First().nickname,
                         whoTake = context.Users.Last().nickname,
                         dateOfTaking = DateTime.Parse("2019-9-22"),
-                        dateOfFinishing = DateTime.Parse("2019-9-25")
+                        dateOfFinishing = null
                     }
                     );
                 context.SaveChanges();

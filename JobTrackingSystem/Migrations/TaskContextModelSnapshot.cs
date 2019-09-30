@@ -25,7 +25,7 @@ namespace JobTrackingSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("dateOfFinishing");
+                    b.Property<DateTime?>("dateOfFinishing");
 
                     b.Property<DateTime>("dateOfTaking");
 

@@ -35,6 +35,40 @@ namespace JobTrackingSystem
                     );
                 context.SaveChanges();
             }
+            if (!context.TrackingTasks.Any())
+            {
+                context.TrackingTasks.AddRange(
+                    new TrackingTask
+                    {
+                        taskName = "1",
+                        status = "1",
+                        whoGave = context.Users.First().nickname,
+                        whoTake = context.Users.Last().nickname,
+                        dateOfTaking = "2019-9-25",
+                        dateOfFinishing = "-"
+
+                    },
+                    new TrackingTask
+                    {
+                        taskName = "2",
+                        status = "2",
+                        whoGave = context.Users.First().nickname,
+                        whoTake = context.Users.First(s => s.Id == 2).nickname,
+                        dateOfTaking = "2019-9-25",
+                        dateOfFinishing = "2019-9-29"
+                    },
+                    new TrackingTask
+                    {
+                        taskName = "3",
+                        status = "3",
+                        whoGave = context.Users.First().nickname,
+                        whoTake = context.Users.Last().nickname,
+                        dateOfTaking = "2019-9-22",
+                        dateOfFinishing = "-"
+                    }
+                    );
+                context.SaveChanges();
+            }
         }
     }
 }

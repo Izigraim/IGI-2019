@@ -19,7 +19,7 @@ namespace JobTrackingSystem.Controllers
 
         public IActionResult Index()
         {
-            return View(_context.Users.ToList());
+            return View(_context.TrackingTasks.ToList());
         } 
     }
 }

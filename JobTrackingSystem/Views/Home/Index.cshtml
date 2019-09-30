@@ -1,27 +1,33 @@
-﻿@model IEnumerable<JobTrackingSystem.Models.User>
+﻿@model IEnumerable<JobTrackingSystem.Models.TrackingTask>
 @{
     ViewData["Title"] = "Home Page";
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Пользователи</title>
+    <title>Задания</title>
 </head>
 <body>
-    <h3>Пользователи</h3>
+    <h3>Список заданий</h3>
     <table>
         <tr>
-            <td>Имя</td>
-            <td>Фамилия</td>
-            <td>Никнейм</td>
+            <td>Задание</td>
+            <td>Статус</td>
+            <td>Кто выдал</td>
+            <td>Дата выдачи</td>
+            <td>Кто выполняет</td>
+            <td>Дата завершения</td>
         </tr>
-        @foreach (var user in Model)
+        @foreach (var task in Model)
         {
-            <tr>
-                <td>@user.first_name</td>
-                <td>@user.last_name</td>
-                <td>@user.nickname</td>
-            </tr>
+        <tr>
+            <td>@task.taskName</td>
+            <td>@task.status</td>
+            <td>@task.whoGave</td>
+            <td>@task.dateOfTaking</td>
+            <td>@task.whoTake</td>
+            <td>@task.dateOfFinishing</td>
+        </tr>
         }
     </table>
 </body>

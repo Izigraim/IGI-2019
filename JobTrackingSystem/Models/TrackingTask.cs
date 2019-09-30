@@ -9,12 +9,12 @@ namespace JobTrackingSystem.Models
     public class TrackingTask
     {
         public int Id { get; set; }
-        private User whoGave { get; set; }
-        private User whoTake { get; set; }
-        private string taskName { get; set; }
-        private string status { get; set; }
-        private string dateOfTaking { get; set; }
-        private string dateOfFinishing { get; set; }
+        public User whoGave { get; set; }
+        public User whoTake { get; set; }
+        public string taskName { get; set; }
+        public string status { get; set; }
+        public string dateOfTaking { get; set; }
+        public string dateOfFinishing { get; set; }
 
     }
 }

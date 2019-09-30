@@ -1,3 +1,28 @@
-﻿@{
+﻿@model IEnumerable<JobTrackingSystem.Models.User>
+@{
     ViewData["Title"] = "Home Page";
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Пользователи</title>
+</head>
+<body>
+    <h3>Пользователи</h3>
+    <table>
+        <tr>
+            <td>Имя</td>
+            <td>Фамилия</td>
+            <td>Никнейм</td>
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.first_name</td>
+                <td>@user.last_name</td>
+                <td>@user.nickname</td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

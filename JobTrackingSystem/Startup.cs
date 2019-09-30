@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using JobTrackingSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using JobTrackingSystem.Models;
+using JobTrackingSystem.Data;
 
 namespace JobTrackingSystem
 {
@@ -34,11 +34,11 @@ namespace JobTrackingSystem
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            string connection = Configuration.GetConnectionString("TaskContextConnection");
+            services.AddDbContext<TaskContext>(options => options.UseSqlServer(connection));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<JobTrackingSystemContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("JobTrackingSystemContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

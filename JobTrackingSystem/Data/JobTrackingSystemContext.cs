@@ -8,12 +8,13 @@ namespace JobTrackingSystem.Models
 {
     public class JobTrackingSystemContext : DbContext
     {
+        public DbSet<JobTrackingSystem.Models.TrackingTask> TrackingTask { get; set; }
+        public DbSet<JobTrackingSystem.Models.User> User { get; set; }
+
         public JobTrackingSystemContext (DbContextOptions<JobTrackingSystemContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
-
-        public DbSet<JobTrackingSystem.Models.TrackingTask> TrackingTask { get; set; }
-        public DbSet<JobTrackingSystem.Models.User> User { get; set; }
     }
 }

@@ -1,54 +1,43 @@
 ﻿@model JobTrackingSystem.Models.TrackingTask
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Новое задание";
 }
 
-<h2>Create</h2>
+<h2>Новое задание</h2>
 
-<h4>TrackingTask</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="whoGave" class="control-label"></label>
-                <input asp-for="whoGave" class="form-control" />
-                <span asp-validation-for="whoGave" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="whoTake" class="control-label"></label>
-                <input asp-for="whoTake" class="form-control" />
-                <span asp-validation-for="whoTake" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="taskName" class="control-label"></label>
+                <label asp-for="taskName" class="control-label">Задание:</label>
                 <input asp-for="taskName" class="form-control" />
                 <span asp-validation-for="taskName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="status" class="control-label"></label>
+                <label asp-for="whoGave" class="control-label">Кто выдал</label>
+                <input asp-for="whoGave" class="form-control" />
+                <span asp-validation-for="whoGave" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="status" class="control-label">Статус</label>
                 <input asp-for="status" class="form-control" />
                 <span asp-validation-for="status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="dateOfTaking" class="control-label"></label>
+                <label asp-for="dateOfTaking" class="control-label">Дата выдачи:</label>
                 <input asp-for="dateOfTaking" class="form-control" />
                 <span asp-validation-for="dateOfTaking" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="dateOfFinishing" class="control-label"></label>
-                <input asp-for="dateOfFinishing" class="form-control" />
-                <span asp-validation-for="dateOfFinishing" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Создать" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Вернуться назад</a>
 </div>

@@ -22,9 +22,18 @@ namespace JobTrackingSystem.Controllers
             return View(_context.TrackingTasks.ToList());
         } 
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(TrackingTask trackingTask)
+        {
+            _context.TrackingTasks.Add(trackingTask);
+            _context.SaveChanges();
+            return View("~/Views/Home/Index.cshtml", _context.TrackingTasks.ToList());
         }
     }
 }

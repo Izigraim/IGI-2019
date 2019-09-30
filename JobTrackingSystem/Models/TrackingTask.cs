@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JobTrackingSystem.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace JobTrackingSystem.Models
 {
@@ -13,8 +14,10 @@ namespace JobTrackingSystem.Models
         public string whoTake { get; set; }
         public string taskName { get; set; }
         public string status { get; set; }
-        public string dateOfTaking { get; set; }
-        public string dateOfFinishing { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime dateOfTaking { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime dateOfFinishing { get; set; }
 
     }
 }

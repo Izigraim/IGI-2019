@@ -44,8 +44,8 @@ namespace JobTrackingSystem
                         status = "1",
                         whoGave = context.Users.First().nickname,
                         whoTake = context.Users.Last().nickname,
-                        dateOfTaking = "2019-9-25",
-                        dateOfFinishing = "-"
+                        dateOfTaking = DateTime.Parse("2019-9-25"),
+                        dateOfFinishing = DateTime.Parse("2019-9-26")
 
                     },
                     new TrackingTask
@@ -54,8 +54,8 @@ namespace JobTrackingSystem
                         status = "2",
                         whoGave = context.Users.First().nickname,
                         whoTake = context.Users.First(s => s.Id == 2).nickname,
-                        dateOfTaking = "2019-9-25",
-                        dateOfFinishing = "2019-9-29"
+                        dateOfTaking = DateTime.Parse("2019-9-25"),
+                        dateOfFinishing = DateTime.Parse("2019-9-28")
                     },
                     new TrackingTask
                     {
@@ -63,8 +63,8 @@ namespace JobTrackingSystem
                         status = "3",
                         whoGave = context.Users.First().nickname,
                         whoTake = context.Users.Last().nickname,
-                        dateOfTaking = "2019-9-22",
-                        dateOfFinishing = "-"
+                        dateOfTaking = DateTime.Parse("2019-9-22"),
+                        dateOfFinishing = DateTime.Parse("2019-9-25")
                     }
                     );
                 context.SaveChanges();

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobTrackingSystem.Migrations
 {
     [DbContext(typeof(TaskContext))]
-    [Migration("20190930201157_Init")]
+    [Migration("20191003201222_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

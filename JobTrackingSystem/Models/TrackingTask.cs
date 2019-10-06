@@ -10,8 +10,8 @@ namespace JobTrackingSystem.Models
     public class TrackingTask
     {
         public int Id { get; set; }
-        public string whoGave { get; set; }
-        public string whoTake { get; set; }
+        public User whoGave { get; set; }
+        public User whoTake { get; set; }
         public string taskName { get; set; }
         public string status { get; set; }
         [DataType(DataType.Date)]

@@ -42,8 +42,8 @@ namespace JobTrackingSystem
                     {
                         taskName = "1",
                         status = "1",
-                        whoGave = context.Users.First().nickname,
-                        whoTake = context.Users.Last().nickname,
+                        whoGave = context.Users.First(),
+                        whoTake = context.Users.Last(),
                         dateOfTaking = DateTime.Parse("2019-9-25"),
                         dateOfFinishing = null
 
@@ -52,8 +52,8 @@ namespace JobTrackingSystem
                     {
                         taskName = "2",
                         status = "2",
-                        whoGave = context.Users.First().nickname,
-                        whoTake = context.Users.First(s => s.Id == 2).nickname,
+                        whoGave = context.Users.First(),
+                        whoTake = context.Users.First(s => s.Id == 2),
                         dateOfTaking = DateTime.Parse("2019-9-25"),
                         dateOfFinishing = DateTime.Parse("2019-9-28")
                     },
@@ -61,8 +61,8 @@ namespace JobTrackingSystem
                     {
                         taskName = "3",
                         status = "3",
-                        whoGave = context.Users.First().nickname,
-                        whoTake = context.Users.Last().nickname,
+                        whoGave = context.Users.First(),
+                        whoTake = context.Users.Last(),
                         dateOfTaking = DateTime.Parse("2019-9-22"),
                         dateOfFinishing = null
                     }

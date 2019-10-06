@@ -1,4 +1,5 @@
-﻿@model IEnumerable<JobTrackingSystem.Models.TrackingTask>
+﻿@using JobTrackingSystem.ViewModels;
+@model IndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -21,14 +22,14 @@
             <td>Кто выполняет</td>
             <td>Дата завершения</td>
         </tr>
-        @foreach (var task in Model)
+        @foreach (var task in Model.trackingTasks)
         {
             <tr>
                 <td>@task.taskName</td>
                 <td>@task.status</td>
-                <td>@task.whoGave</td>
+                <td>@task.whoGave.nickname</td>
                 <td>@task.dateOfTaking</td>
-                <td>@task.whoTake</td>
+                <td>@task.whoTake.nickname</td>
                 <td>@task.dateOfFinishing</td>
             </tr>
         }

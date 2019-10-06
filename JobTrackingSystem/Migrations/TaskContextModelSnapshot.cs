@@ -33,11 +33,15 @@ namespace JobTrackingSystem.Migrations
 
                     b.Property<string>("taskName");
 
-                    b.Property<string>("whoGave");
+                    b.Property<int?>("whoGaveId");
 
-                    b.Property<string>("whoTake");
+                    b.Property<int?>("whoTakeId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("whoGaveId");
+
+                    b.HasIndex("whoTakeId");
 
                     b.ToTable("TrackingTasks");
                 });
@@ -57,6 +61,17 @@ namespace JobTrackingSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("JobTrackingSystem.Models.TrackingTask", b =>
+                {
+                    b.HasOne("JobTrackingSystem.Models.User", "whoGave")
+                        .WithMany()
+                        .HasForeignKey("whoGaveId");
+
+                    b.HasOne("JobTrackingSystem.Models.User", "whoTake")
+                        .WithMany()
+                        .HasForeignKey("whoTakeId");
                 });
 #pragma warning restore 612, 618
         }

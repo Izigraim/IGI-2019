@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using JobTrackingSystem.Models;
 using JobTrackingSystem.Data;
+using JobTrackingSystem.ViewModels;
 
 namespace JobTrackingSystem.Controllers
 {
@@ -15,11 +16,13 @@ namespace JobTrackingSystem.Controllers
         public HomeController(TaskContext context)
         {
             _context = context;
+           
         }
 
         public IActionResult Index()
         {
-            return View(_context.TrackingTasks.ToList());
+            IndexViewModel ivm = new IndexViewModel { trackingTasks = _context.TrackingTasks.ToList(), Users = _context.Users.ToList() };
+            return View(ivm);
         } 
 
         [HttpGet]

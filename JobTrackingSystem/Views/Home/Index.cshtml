@@ -27,9 +27,9 @@
             <tr>
                 <td>@task.taskName</td>
                 <td>@task.status</td>
-                <td>@task.whoGave.nickname</td>
+                <td>@task.whoGave?.nickname</td>
                 <td>@task.dateOfTaking</td>
-                <td>@task.whoTake.nickname</td>
+                <td>@task.whoTake?.nickname</td>
                 <td>@task.dateOfFinishing</td>
             </tr>
         }

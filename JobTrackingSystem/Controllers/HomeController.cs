@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using JobTrackingSystem.Models;
 using JobTrackingSystem.Data;
 using JobTrackingSystem.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace JobTrackingSystem.Controllers
 {
@@ -28,7 +29,9 @@ namespace JobTrackingSystem.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            IQueryable<User> users = from m in _context.Users select m;
+            var cvm = new CreateViewModel { trackingTask = null, Users = new SelectList(users.ToList(),"Id","nickname")};
+            return View(cvm);
         }
 
         [HttpPost]

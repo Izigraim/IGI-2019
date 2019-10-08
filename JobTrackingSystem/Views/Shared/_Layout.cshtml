@@ -30,7 +30,19 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Регитсрация</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <p style="color:white">@User.Identity.Name</p>
+
+                        <form method="post" asp-controller="Account" asp-action="LogOff">
+                            <input type="submit" value="Выход" />
+                        </form>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Вход</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a></li>
+                    }
                 </ul>
             </div>
         </div>

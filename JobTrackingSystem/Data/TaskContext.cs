@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace JobTrackingSystem.Data
 {
-    public class TaskContext : DbContext
+    public class TaskContext : IdentityDbContext<User>
     {
         public DbSet<TrackingTask> TrackingTasks { get; set; }        
 

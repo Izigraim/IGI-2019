@@ -8,11 +8,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace JobTrackingSystem.Data
 {
-    public class TaskContext : DbContext
+    public class UserContext : IdentityDbContext<User>
     {
-        public DbSet<TrackingTask> TrackingTasks { get; set; }        
-
-        public TaskContext(DbContextOptions<TaskContext> options) : base(options)
+        public UserContext(DbContextOptions<UserContext> options) : base(options)
         {
             Database.EnsureCreated();
         }

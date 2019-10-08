@@ -22,16 +22,16 @@ namespace JobTrackingSystem.Controllers
 
         public IActionResult Index()
         {
-            IndexViewModel ivm = new IndexViewModel { trackingTasks = _context.TrackingTasks.ToList(), Users = _context.Users.ToList() };
-            return View(ivm);
+            //IndexViewModel ivm = new IndexViewModel { trackingTasks = _context.TrackingTasks.ToList(), Users = _context.Users.ToList() };
+            return View();
         } 
 
         [HttpGet]
         public IActionResult Create()
         {
-            IQueryable<User> users = from m in _context.Users select m;
-            var cvm = new CreateViewModel { trackingTask = null, Users = new SelectList(users.ToList(),"Id","nickname")};
-            return View(cvm);
+            //IQueryable<User> users = from m in _context.Users select m;
+            //var cvm = new CreateViewModel { trackingTask = null, Users = new SelectList(users.ToList(),"Id","nickname")};
+            return View();
         }
 
         [HttpPost]

@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using JobTrackingSystem.Models;
 using JobTrackingSystem.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace JobTrackingSystem
 {
@@ -34,8 +35,13 @@ namespace JobTrackingSystem
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            string connection = Configuration.GetConnectionString("TaskContextConnection");
-            services.AddDbContext<TaskContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<TaskContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("TaskContextConnection")));
+
+            services.AddDbContext<TaskContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("UsersConnection")));
+
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TaskContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -57,6 +63,7 @@ namespace JobTrackingSystem
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

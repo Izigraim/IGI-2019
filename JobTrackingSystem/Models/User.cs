@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace JobTrackingSystem.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        public int Id { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string nickname { get; set; }
+        public string Nickname { get; set; }
     }
 }

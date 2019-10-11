@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using JobTrackingSystem.Models;
 using JobTrackingSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CustomIdentityApp.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class UsersController : Controller
     {
         UserManager<User> _userManager;

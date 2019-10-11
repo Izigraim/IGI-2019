@@ -12,6 +12,7 @@ namespace JobTrackingSystem.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<Models.User> _userManager;
+        private readonly RoleManager<User> _roleManager;
         private readonly SignInManager<Models.User> _signInManager;
 
         public AccountController(UserManager<Models.User> userManager, SignInManager<Models.User> signInManager)
@@ -37,6 +38,7 @@ namespace JobTrackingSystem.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
+                    await _userManager.AddToRoleAsync(user, "User");
                     return RedirectToAction("Index", "Home");
                 }
                 else

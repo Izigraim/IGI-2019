@@ -38,10 +38,10 @@ namespace JobTrackingSystem
             services.AddDbContext<TaskContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("TaskContextConnection")));
 
-            services.AddDbContext<TaskContext>(options =>
+            services.AddDbContext<UserContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("UsersConnection")));
 
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TaskContext>();
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<UserContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

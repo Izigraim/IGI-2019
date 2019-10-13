@@ -11,10 +11,10 @@ namespace JobTrackingSystem.Data
     public class TaskContext : IdentityDbContext<User>
     {
         public DbSet<TrackingTask> TrackingTasks { get; set; }        
+        public DbSet<TakingTasks> TakingTasks { get; set; }
 
         public TaskContext(DbContextOptions<TaskContext> options) : base(options)
         {
-            Database.EnsureCreated();
         }
     }
 }

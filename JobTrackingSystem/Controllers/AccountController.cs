@@ -12,7 +12,6 @@ namespace JobTrackingSystem.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<Models.User> _userManager;
-        private readonly RoleManager<User> _roleManager;
         private readonly SignInManager<Models.User> _signInManager;
 
         public AccountController(UserManager<Models.User> userManager, SignInManager<Models.User> signInManager)

@@ -12,12 +12,15 @@ namespace JobTrackingSystem.Models
         public int Id { get; set; }
         public User whoGave { get; set; }
         public User whoTake { get; set; }
-        public string taskName { get; set; }
+        public string ShortDescription { get; set; }
+        public string LongDescription { get; set; }
         public string status { get; set; }
         [DataType(DataType.Date)]
         public DateTime dateOfTaking { get; set; }
         [DataType(DataType.Date)]
         public DateTime? dateOfFinishing { get; set; }
 
+        public int? TakingTaskId { get; set; }
+        public TakingTasks TakingTasks { get; set; }
     }
 }

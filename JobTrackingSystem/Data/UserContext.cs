@@ -12,7 +12,6 @@ namespace JobTrackingSystem.Data
     {
         public UserContext(DbContextOptions<UserContext> options) : base(options)
         {
-            Database.EnsureCreated();
         }
     }
 }

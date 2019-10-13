@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using JobTrackingSystem.Models;
 using JobTrackingSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobTrackingSystem.Controllers
 {

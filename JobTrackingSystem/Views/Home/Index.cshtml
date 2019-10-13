@@ -1,4 +1,4 @@
-﻿@using JobTrackingSystem.ViewModels;
+﻿@using JobTrackingSystem.ViewModels
 @model IndexViewModel
 @{
     ViewData["Title"] = "Home Page";
@@ -10,29 +10,36 @@
 </head>
 <body>
     <h3>Список заданий</h3>
+    @if(User.Identity.IsAuthenticated)
+    {
     <div>
         <a asp-action="Create">Добавить новое задание</a>
     </div>
-    @*<table>
-        <tr>
-            <td>Задание</td>
-            <td>Статус</td>
-            <td>Кто выдал</td>
-            <td>Дата выдачи</td>
-            <td>Кто выполняет</td>
-            <td>Дата завершения</td>
-        </tr>
-        @foreach (var task in Model.trackingTasks)
-        {
+    }
+    <table class="table">
+        <thead>
             <tr>
-                <td>@task.taskName</td>
-                <td>@task.status</td>
-                <td>@task.whoGave?</td>
-                <td>@task.dateOfTaking</td>
-                <td>@task.whoTake?</td>
-                <td>@task.dateOfFinishing</td>
+                <td>Задание</td>
+                <td>Статус</td>
+                <td>Кто выдал</td>
+                <td>Дата выдачи</td>
+                <td>Кто выполняет</td>
+                <td>Дата завершения</td>
             </tr>
-        }
-    </table>*@
+        </thead>
+        <tbody>
+            @foreach (var task in Model.trackingTasks)
+            {
+                <tr>
+                    <td>@task.taskName</td>
+                    <td>@task.status</td>
+                    <td>@task.whoGave.Nickname</td>
+                    <td>@task.dateOfTaking</td>
+                    <td>@task.whoTake</td>
+                    <td>@task.dateOfFinishing</td>
+                </tr>
+            }
+        </tbody>
+</table>
 </body>
 </html>

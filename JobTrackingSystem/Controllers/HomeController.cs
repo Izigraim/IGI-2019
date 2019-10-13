@@ -8,35 +8,37 @@ using JobTrackingSystem.Models;
 using JobTrackingSystem.Data;
 using JobTrackingSystem.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
 
 namespace JobTrackingSystem.Controllers
 {
     public class HomeController : Controller
     {
         TaskContext _context;
-        public HomeController(TaskContext context)
+        UserManager<User> _userManager;
+        public HomeController(TaskContext context, UserManager<User> userManager)
         {
             _context = context;
-           
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            //IndexViewModel ivm = new IndexViewModel { trackingTasks = _context.TrackingTasks.ToList(), Users = _context.Users.ToList() };
-            return View();
+            IndexViewModel ivm = new IndexViewModel { trackingTasks = _context.TrackingTasks.ToList(), Users = _context.Users.ToList() };
+            return View(ivm);
         } 
 
         [HttpGet]
         public IActionResult Create()
         {
-            //IQueryable<User> users = from m in _context.Users select m;
-            //var cvm = new CreateViewModel { trackingTask = null, Users = new SelectList(users.ToList(),"Id","nickname")};
+             
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(TrackingTask trackingTask)
+        public async Task<IActionResult> Create(TrackingTask trackingTask)
         {
+            trackingTask.whoGave = await _userManager.FindByNameAsync(User.Identity.Name);
             _context.TrackingTasks.Add(trackingTask);
             _context.SaveChanges();
             return View("~/Views/Home/Index.cshtml", _context.TrackingTasks.ToList());

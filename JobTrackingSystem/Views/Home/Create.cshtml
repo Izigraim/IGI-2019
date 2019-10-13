@@ -1,0 +1,22 @@
+﻿@model JobTrackingSystem.Models.TrackingTask
+@{
+    ViewData["Title"] = "Новое задание";
+}
+<form asp-action="Create" asp-controller="Home">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="taskName" class="control-label">Название</label><br />
+        <input type="text" asp-for="taskName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="status" class="control-label">Статус</label><br />
+        <input type="text" asp-for="status" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="dateOfTaking" class="control-label">Дата выдачи</label><br />
+        <input type="date" asp-for="dateOfTaking" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Добавить" class="btn btn-default" />
+    </div>
+</form>

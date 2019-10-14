@@ -62,10 +62,48 @@ namespace JobTrackingSystem.Controllers
             _context.TrackingTasks.Update(task);
             await _context.SaveChangesAsync();
 
-            List<TrackingTask> tt = new List<TrackingTask>() { task };
-            TakingTasks takingTasks = new TakingTasks { User = task.whoTake, trackingTasks = tt };
+            //TakingTasks takingTasks = await _context.TakingTasks.FirstOrDefaultAsync(m => task.whoTake.Email == User.Identity.Name);
+            //if(takingTasks == null)
+            //{
+            //    List<TrackingTask> tt = new List<TrackingTask>() { task };
+            //    takingTasks = new TakingTasks { User = task.whoTake, trackingTasks = tt };
+            //}
+            //else
+            //{
+            //    List<TrackingTask> tt = (List<TrackingTask>)takingTasks.trackingTasks;
+            //    if(tt == null)
+            //    {
+            //        tt = new List<TrackingTask>() { task };
+            //    }
+            //    tt.Add(task);
+            //    _context.TakingTasks.Update(takingTasks);
+            //}
+            //await _context.SaveChangesAsync();
 
-            return View();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> ShowUser()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            List<TrackingTask> tt = new List<TrackingTask>();
+            foreach(var task in _context.TrackingTasks)
+            {
+                if (task.whoTake == user) tt.Add(task);
+            }
+            TaskUserViewModel tuvm = new TaskUserViewModel { User = user, TrackingTasks = tt };
+            return View(tuvm);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var task = await _context.TrackingTasks.FindAsync(id);
+            _context.TrackingTasks.Remove(task);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

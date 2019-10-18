@@ -1,0 +1,20 @@
+﻿@model JobTrackingSystem.Models.TrackingTask
+@{
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Задание @Model.ShortDescription</title>
+</head>
+<body>
+    <label>@Model.ShortDescription</label><br />
+    <label>@Model.LongDescription</label><br />
+    <label>@Model.status</label><br />
+    <label>@Model.dateOfTaking</label><br />
+    @if (Model.dateOfFinishing == null)
+    {
+        <a class="btn btn-sm btn-success" asp-controller="Home" asp-action="FinishTask" asp-route-id="@Model.Id">Завершить задание</a>
+    }
+</body>
+</html>

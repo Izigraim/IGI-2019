@@ -24,7 +24,7 @@
             @foreach (var task in Model.TrackingTasks)
             {
                 <tr>
-                    <td>@task.ShortDescription</td>
+                    <td><a asp-controller="Home" asp-action="ShowUserTask" asp-route-id="@task.Id">@task.ShortDescription</a></td>
                     <td>@task.LongDescription</td>
                     <td>@task.status</td>
                     <td>@task.dateOfTaking</td>

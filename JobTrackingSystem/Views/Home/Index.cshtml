@@ -30,22 +30,26 @@
         <tbody>
             @foreach (var task in Model.trackingTasks)
             {
-                <tr>
-                    <td>@task.ShortDescription</td>
-                    <td>@task.status</td>
-                    <td>@task.whoGave.Nickname</td>
-                    <td>@task.dateOfTaking</td>
-                    <td>@task.whoTake?.Nickname</td>
-                    <td>@task.dateOfFinishing</td>
-                    @if(User.Identity.IsAuthenticated && task.whoTake == null)
-                     {
-                         <td><a class="btn btn-sm btn-primary" asp-controller="Home" asp-action="TakeTask" asp-route-id="@task.Id">Взять задание</a></td>
-                     }
-                    @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            <tr>
+                <td>@task.ShortDescription</td>
+                <td>@task.status</td>
+                <td>@task.whoGave.Nickname</td>
+                <td>@task.dateOfTaking</td>
+                <td>@task.whoTake?.Nickname</td>
+                <td>@task.dateOfFinishing</td>
+                @if (User.Identity.IsAuthenticated && task.whoTake == null)
+                {
+                    <td><a class="btn btn-sm btn-primary" asp-controller="Home" asp-action="TakeTask" asp-route-id="@task.Id">Взять задание</a></td>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    @if (task.dateOfFinishing == null)
                     {
-                        <td><a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@task.Id">Удалить</a></td>
+                        <td><a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Edit" asp-route-id="@task.Id">Редактировать</a></td>
                     }
-                </tr>
+                    <td><a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@task.Id">Удалить</a></td>
+                }
+            </tr>
             }
         </tbody>
     </table>

@@ -10,6 +10,7 @@ using JobTrackingSystem.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobTrackingSystem.Controllers
 {
@@ -40,10 +41,10 @@ namespace JobTrackingSystem.Controllers
         public async Task<IActionResult> Create(TrackingTask trackingTask)
         {
             trackingTask.whoGave = await _userManager.FindByNameAsync(User.Identity.Name);
+            trackingTask.dateOfTaking = DateTime.Now;
             _context.TrackingTasks.Add(trackingTask);
             _context.SaveChanges();
-            IndexViewModel ivm = new IndexViewModel { trackingTasks = _context.TrackingTasks.ToList(), Users = _context.Users.ToList() };
-            return View("~/Views/Home/Index.cshtml", ivm);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> TakeTask(int? id)
@@ -96,6 +97,7 @@ namespace JobTrackingSystem.Controllers
             return View(tuvm);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -103,6 +105,52 @@ namespace JobTrackingSystem.Controllers
             var task = await _context.TrackingTasks.FindAsync(id);
             _context.TrackingTasks.Remove(task);
             await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        [Authorize(Roles ="Admin,Manager")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var task = await _context.TrackingTasks.FindAsync(id);
+
+            return View(task);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin,Manager")]
+        public async Task<IActionResult> Edit(TrackingTask trackingTask)
+        {
+            _context.TrackingTasks.Update(trackingTask);
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowUserTask(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var task = await _context.TrackingTasks.FindAsync(id);
+
+            ShowUserTaskViewModel sut = new ShowUserTaskViewModel { User = await _userManager.FindByNameAsync(User.Identity.Name), TrackingTask = task };
+
+            return View(task);
+        }
+
+        public async Task<IActionResult> FinishTask(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var task = await _context.TrackingTasks.FindAsync(id);
+
+            task.dateOfFinishing = DateTime.Now;
+            _context.TrackingTasks.Update(task);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }

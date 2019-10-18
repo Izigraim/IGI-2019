@@ -135,10 +135,15 @@ namespace JobTrackingSystem.Controllers
             if (id == null) return NotFound();
 
             var task = await _context.TrackingTasks.FindAsync(id);
+            List<TrackingTask> tt = new List<TrackingTask> { task };
 
-            ShowUserTaskViewModel sut = new ShowUserTaskViewModel { User = await _userManager.FindByNameAsync(User.Identity.Name), TrackingTask = task };
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            List<User> users = new List<User> { user };
 
-            return View(task);
+
+            IndexViewModel ivm = new IndexViewModel { Users = users, trackingTasks = tt };
+
+            return View(ivm);
         }
 
         public async Task<IActionResult> FinishTask(int? id)
@@ -152,6 +157,19 @@ namespace JobTrackingSystem.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var task = await _context.TrackingTasks.FindAsync(id);
+            List<TrackingTask> tt = new List<TrackingTask> { task };
+
+            IndexViewModel ivm = new IndexViewModel { Users = _context.Users.ToList(), trackingTasks = tt };
+
+            return View(ivm);
         }
     }
 }

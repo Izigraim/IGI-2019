@@ -1,11 +1,11 @@
-﻿@model JobTrackingSystem.ViewModels.IndexViewModel
+﻿@using JobTrackingSystem.ViewModels
+@model IndexViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Просмотр задания";
 }
-<!DOCTYPE html>
 <html>
 <head>
-    <title>Задание </title>
+    <title>Просмотр задания</title>
 </head>
 <body>
     <div>
@@ -20,12 +20,8 @@
                 <li>Кто выполняет: @task.whoTake?.Nickname</li>
                 <li>Дата завершения: @task.dateOfFinishing</li>
             </ol>
-            @if (task.dateOfFinishing == null)
-            {
-                <a class="btn btn-sm btn-success" asp-controller="Home" asp-action="FinishTask" asp-route-id="@task.Id">Завершить задание</a>
-            }
-            <a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Index">Назад на главную страницу</a>
         }
     </div>
+    <a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Index">Назад на главную страницу</a>
 </body>
 </html>

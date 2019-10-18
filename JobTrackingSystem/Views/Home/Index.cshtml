@@ -31,7 +31,7 @@
             @foreach (var task in Model.trackingTasks)
             {
             <tr>
-                <td>@task.ShortDescription</td>
+                <td><a asp-controller="Home" asp-action="Details" asp-route-id="@task.Id">@task.ShortDescription</a></td>
                 <td>@task.status</td>
                 <td>@task.whoGave.Nickname</td>
                 <td>@task.dateOfTaking</td>
@@ -43,7 +43,7 @@
                 }
                 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                 {
-                    @if (task.dateOfFinishing == null)
+                    @if (task.dateOfFinishing == null && task.whoTake == null)
                     {
                         <td><a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Edit" asp-route-id="@task.Id">Редактировать</a></td>
                     }

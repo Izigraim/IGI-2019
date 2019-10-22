@@ -63,25 +63,6 @@ namespace JobTrackingSystem.Controllers
             _context.TrackingTasks.Update(task);
             await _context.SaveChangesAsync();
 
-            //TakingTasks takingTasks = await _context.TakingTasks.FirstOrDefaultAsync(m => task.whoTake.Email == User.Identity.Name);
-            //if(takingTasks == null)
-            //{
-            //    List<TrackingTask> tt = new List<TrackingTask>() { task };
-            //    takingTasks = new TakingTasks { User = task.whoTake, trackingTasks = tt };
-            //}
-            //else
-            //{
-            //    List<TrackingTask> tt = (List<TrackingTask>)takingTasks.trackingTasks;
-            //    if(tt == null)
-            //    {
-            //        tt = new List<TrackingTask>() { task };
-            //    }
-            //    tt.Add(task);
-            //    _context.TakingTasks.Update(takingTasks);
-            //}
-            //await _context.SaveChangesAsync();
-
-
             return RedirectToAction(nameof(Index));
         }
 

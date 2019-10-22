@@ -4,14 +4,16 @@ using JobTrackingSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JobTrackingSystem.Migrations
 {
     [DbContext(typeof(TaskContext))]
-    partial class TaskContextModelSnapshot : ModelSnapshot
+    [Migration("20191022151033_2")]
+    partial class _2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,13 +37,9 @@ namespace JobTrackingSystem.Migrations
 
                     b.Property<string>("status");
 
-                    b.Property<string>("whoGaveId");
-
                     b.Property<string>("whoTakeId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("whoGaveId");
 
                     b.HasIndex("whoTakeId");
 
@@ -213,10 +211,6 @@ namespace JobTrackingSystem.Migrations
 
             modelBuilder.Entity("JobTrackingSystem.Models.TrackingTask", b =>
                 {
-                    b.HasOne("JobTrackingSystem.Models.User", "whoGave")
-                        .WithMany()
-                        .HasForeignKey("whoGaveId");
-
                     b.HasOne("JobTrackingSystem.Models.User", "whoTake")
                         .WithMany("TrackingTasks")
                         .HasForeignKey("whoTakeId");

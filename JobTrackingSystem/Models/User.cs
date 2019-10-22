@@ -9,5 +9,7 @@ namespace JobTrackingSystem.Models
     public class User : IdentityUser
     {
         public string Nickname { get; set; }
+
+        public List<TrackingTask> TrackingTasks { get; set; }
     }
 }

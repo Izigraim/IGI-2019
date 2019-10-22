@@ -11,10 +11,15 @@ namespace JobTrackingSystem.Data
     public class TaskContext : IdentityDbContext<User>
     {
         public DbSet<TrackingTask> TrackingTasks { get; set; }        
-        public DbSet<TakingTasks> TakingTasks { get; set; }
 
         public TaskContext(DbContextOptions<TaskContext> options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<User>().HasMany(t => t.TrackingTasks).WithOne(g => g.whoTake).HasForeignKey(g => g.whoTakeId);
         }
     }
 }

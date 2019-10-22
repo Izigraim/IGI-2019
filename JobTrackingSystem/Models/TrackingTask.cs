@@ -11,6 +11,7 @@ namespace JobTrackingSystem.Models
     {
         public int Id { get; set; }
         public User whoGave { get; set; }
+        public string whoTakeId { get; set; }
         public User whoTake { get; set; }
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
@@ -20,7 +21,6 @@ namespace JobTrackingSystem.Models
         [DataType(DataType.Date)]
         public DateTime? dateOfFinishing { get; set; }
 
-        public int? TakingTaskId { get; set; }
-        public TakingTasks TakingTasks { get; set; }
+
     }
 }

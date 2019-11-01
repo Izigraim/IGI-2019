@@ -120,6 +120,18 @@ namespace JobTrackingSystem.Controllers
             return View(task);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ShowUserTask(TrackingTask trackingTask)
+        {
+            trackingTask.dateOfFinishing = DateTime.Now;
+            trackingTask.whoTake = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            _context.TrackingTasks.Update(trackingTask);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> FinishTask(int? id)
         {
             if (id == null) return NotFound();

@@ -19,8 +19,13 @@
                 <li>Статус: @task.status</li>
                 <li>Кто выполняет: @task.whoTake?.Nickname</li>
                 <li>Дата завершения: @task.dateOfFinishing</li>
-            </ol>
-        }
+                @if (User.IsInRole("Admin"))
+                {
+                <li>Комментарий: @task.Comment</li>
+            }
+        </ol>
+    }
+
     </div>
     <a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Index">Назад на главную страницу</a>
 </body>

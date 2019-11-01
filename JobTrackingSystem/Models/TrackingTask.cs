@@ -16,11 +16,15 @@ namespace JobTrackingSystem.Models
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
         public string status { get; set; }
+
+        public string Comment { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime dateOfTaking { get; set; }
         [DataType(DataType.Date)]
         public DateTime? dateOfFinishing { get; set; }
 
+    
 
     }
 }

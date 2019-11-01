@@ -1,4 +1,4 @@
-﻿@model JobTrackingSystem.ViewModels.IndexViewModel
+﻿@model JobTrackingSystem.Models.TrackingTask
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -9,23 +9,20 @@
 </head>
 <body>
     <div>
-        @foreach (var task in Model.trackingTasks)
-        {
             <ol class="list-group">
-                <li>Задание: @task.ShortDescription</li>
-                <li>Описание задания: @task.LongDescription</li>
-                <li>Кто выдал: @task.whoGave.Nickname</li>
-                <li>Дата выдачи: @task.dateOfTaking</li>
-                <li>Статус: @task.status</li>
-                <li>Кто выполняет: @task.whoTake?.Nickname</li>
-                <li>Дата завершения: @task.dateOfFinishing</li>
+                <li>Задание: @Model.ShortDescription</li>
+                <li>Описание задания: @Model.LongDescription</li>
+                <li>Кто выдал: @Model.whoGave.Nickname</li>
+                <li>Дата выдачи: @Model.dateOfTaking</li>
+                <li>Статус: @Model.status</li>
+                <li>Кто выполняет: @Model.whoTake?.Nickname</li>
+                <li>Дата завершения: @Model.dateOfFinishing</li>
             </ol>
-            @if (task.dateOfFinishing == null)
+            @if (Model.dateOfFinishing == null)
             {
-                <a class="btn btn-sm btn-success" asp-controller="Home" asp-action="FinishTask" asp-route-id="@task.Id">Завершить задание</a>
+                <a class="btn btn-sm btn-success" asp-controller="Home" asp-action="FinishTask" asp-route-id="@Model.Id">Завершить задание</a>
             }
             <a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Index">Назад на главную страницу</a>
-        }
     </div>
 </body>
 </html>

@@ -111,20 +111,13 @@ namespace JobTrackingSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowUserTask(int? id)
+        public IActionResult ShowUserTask(int? id)
         {
             if (id == null) return NotFound();
 
-            var task = await _context.TrackingTasks.FindAsync(id);
-            List<TrackingTask> tt = new List<TrackingTask> { task };
+            var task = _context.TrackingTasks.Include(c => c.whoGave).Include(c => c.whoTake).Where(c => c.Id == id).First();
 
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            List<User> users = new List<User> { user };
-
-
-            IndexViewModel ivm = new IndexViewModel { Users = users, trackingTasks = tt };
-
-            return View(ivm);
+            return View(task);
         }
 
         public async Task<IActionResult> FinishTask(int? id)

@@ -1,5 +1,4 @@
-﻿@using JobTrackingSystem.ViewModels
-@model IndexViewModel
+﻿@model JobTrackingSystem.Models.TrackingTask
 @{
     ViewData["Title"] = "Просмотр задания";
 }
@@ -9,22 +8,29 @@
 </head>
 <body>
     <div>
-        @foreach (var task in Model.trackingTasks)
-        {
-            <ol class="list-group">
-                <li>Задание: @task.ShortDescription</li>
-                <li>Описание задания: @task.LongDescription</li>
-                <li>Кто выдал: @task.whoGave.Nickname</li>
-                <li>Дата выдачи: @task.dateOfTaking</li>
-                <li>Статус: @task.status</li>
-                <li>Кто выполняет: @task.whoTake?.Nickname</li>
-                <li>Дата завершения: @task.dateOfFinishing</li>
-                @if (User.IsInRole("Admin"))
-                {
-                <li>Комментарий: @task.Comment</li>
+        <ol class="list-group">
+            <li>Задание: @Model.ShortDescription</li>
+            <li>Описание задания: @Model.LongDescription</li>
+            <li>Кто выдал: @Model.whoGave.Nickname</li>
+            <li>Дата выдачи: @Model.dateOfTaking</li>
+            <li>Статус: @Model.status</li>
+            <li>Кто выполняет: @Model.whoTake?.Nickname</li>
+            <li>Дата завершения: @Model.dateOfFinishing</li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li>Комментарий:</li>
+                <textarea cols="100" rows="10" readonly>@Model.Comment</textarea>
             }
         </ol>
-    }
+        @if (User.IsInRole("Admin") && Model.status == "Обрабатывается")
+        {
+            <div>
+                <a class="btn btn-sm btn-success" asp-controller="Home" asp-action="Confirm" asp-route-id="@Model.Id">Одобрить</a>
+            </div>
+            <div>
+                <a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="Deny" asp-route-id="@Model.Id">Отклонить</a>
+            </div>
+        }
 
     </div>
     <a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Index">Назад на главную страницу</a>

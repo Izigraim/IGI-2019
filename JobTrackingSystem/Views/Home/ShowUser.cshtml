@@ -8,8 +8,8 @@
     <title>Информация о пользователе</title>
 </head>
 <body>
-    <label>@Model.User.Email</label><br />
-    <label>@Model.User.Nickname</label><br />
+    <h4>Email: @Model.User.Email</h4>
+    <h4>Имя: @Model.User.Nickname</h4>
     <table class="table">
         <thead>
             <tr>
@@ -29,6 +29,10 @@
                     <td>@task.status</td>
                     <td>@task.dateOfTaking</td>
                     <td>@task.dateOfFinishing</td>
+                    @if (task.status == "Выполняется")
+                    {
+                        <td><a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="DeclineTask" asp-route-id="@task.Id">Отменить задание</a></td>
+                    }
                 </tr>
             }
         </tbody>

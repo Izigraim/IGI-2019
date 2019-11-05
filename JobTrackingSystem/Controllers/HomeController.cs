@@ -42,6 +42,7 @@ namespace JobTrackingSystem.Controllers
         {
             trackingTask.whoGave = await _userManager.FindByNameAsync(User.Identity.Name);
             trackingTask.dateOfTaking = DateTime.Now;
+            trackingTask.status = "Доступно";
             _context.TrackingTasks.Add(trackingTask);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
@@ -60,6 +61,7 @@ namespace JobTrackingSystem.Controllers
                 return NotFound();
             }
             task.whoTake = await _userManager.FindByNameAsync(User.Identity.Name);
+            task.status = "Выполняется";
             _context.TrackingTasks.Update(task);
             await _context.SaveChangesAsync();
 
@@ -125,6 +127,7 @@ namespace JobTrackingSystem.Controllers
         {
             trackingTask.dateOfFinishing = DateTime.Now;
             trackingTask.whoTake = await _userManager.FindByNameAsync(User.Identity.Name);
+            trackingTask.status = "Обрабатывается";
 
             _context.TrackingTasks.Update(trackingTask);
             await _context.SaveChangesAsync();
@@ -132,30 +135,54 @@ namespace JobTrackingSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> FinishTask(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null) return NotFound();
 
-            var task = await _context.TrackingTasks.FindAsync(id);
+            var task = _context.TrackingTasks.Include(c => c.whoGave).Include(c => c.whoTake).Where(c => c.Id == id).First();
 
-            task.dateOfFinishing = DateTime.Now;
+            return View(task);
+        }
+
+        public async Task<IActionResult> Confirm(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var task = _context.TrackingTasks.Include(c => c.whoGave).Include(c => c.whoTake).Where(c => c.Id == id).First();
+            task.status = "Выполнено";
+
             _context.TrackingTasks.Update(task);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Deny(int? id)
         {
             if (id == null) return NotFound();
 
-            var task = await _context.TrackingTasks.FindAsync(id);
-            List<TrackingTask> tt = new List<TrackingTask> { task };
+            var task = _context.TrackingTasks.Include(c => c.whoGave).Include(c => c.whoTake).Where(c => c.Id == id).First();
+            task.status = "Выполняется";
+            task.dateOfFinishing = null;
 
-            IndexViewModel ivm = new IndexViewModel { Users = _context.Users.ToList(), trackingTasks = tt };
+            _context.TrackingTasks.Update(task);
+            await _context.SaveChangesAsync();
 
-            return View(ivm);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> DeclineTask(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var task = _context.TrackingTasks.Include(c => c.whoGave).Include(c => c.whoTake).Where(c => c.Id == id).First();
+            task.status = "Доступно";
+            task.whoTake = null;
+
+            _context.TrackingTasks.Update(task);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

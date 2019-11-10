@@ -1,0 +1,28 @@
+﻿@model IEnumerable<TrackingTask>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Задание</td>
+            <td>Описание задания</td>
+            <td>Статус</td>
+            <td>Дата выдачи</td>
+            <td>Дата завершения</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in Model)
+        {
+            <tr>
+                <td><a asp-controller="Home" asp-action="ShowUserTask" asp-route-id="@task.Id">@task.ShortDescription</a></td>
+                <td>@task.LongDescription</td>
+                <td>@task.status</td>
+                <td>@task.dateOfTaking</td>
+                <td>@task.dateOfFinishing</td>
+                @if (task.status == "Выполняется")
+                {
+                    <td><a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="DeclineTask" asp-route-id="@task.Id">Отменить задание</a></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

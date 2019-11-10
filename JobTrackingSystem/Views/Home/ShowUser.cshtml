@@ -1,4 +1,4 @@
-﻿@model JobTrackingSystem.ViewModels.TaskUserViewModel
+﻿@model IEnumerable<TrackingTask>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -8,34 +8,8 @@
     <title>Информация о пользователе</title>
 </head>
 <body>
-    <h4>Email: @Model.User.Email</h4>
-    <h4>Имя: @Model.User.Nickname</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <td>Задание</td>
-                <td>Описание задания</td>
-                <td>Статус</td>
-                <td>Дата выдачи</td>
-                <td>Дата завершения</td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var task in Model.TrackingTasks)
-            {
-                <tr>
-                    <td><a asp-controller="Home" asp-action="ShowUserTask" asp-route-id="@task.Id">@task.ShortDescription</a></td>
-                    <td>@task.LongDescription</td>
-                    <td>@task.status</td>
-                    <td>@task.dateOfTaking</td>
-                    <td>@task.dateOfFinishing</td>
-                    @if (task.status == "Выполняется")
-                    {
-                        <td><a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="DeclineTask" asp-route-id="@task.Id">Отменить задание</a></td>
-                    }
-                </tr>
-            }
-        </tbody>
-    </table>
+    <h4>Email: @ViewBag.User.Email</h4>
+    <h4>Имя: @ViewBag.User.Nickname</h4>
+    @await Component.InvokeAsync("UserTasksList", ViewBag.User)
 </body>
 </html>

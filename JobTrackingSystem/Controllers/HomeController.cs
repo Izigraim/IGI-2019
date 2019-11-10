@@ -71,13 +71,15 @@ namespace JobTrackingSystem.Controllers
         public async Task<IActionResult> ShowUser()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            List<TrackingTask> tt = new List<TrackingTask>();
-            foreach(var task in _context.TrackingTasks)
-            {
-                if (task.whoTake == user) tt.Add(task);
-            }
-            TaskUserViewModel tuvm = new TaskUserViewModel { User = user, TrackingTasks = tt };
-            return View(tuvm);
+            var tasks = _context.TrackingTasks.Include(c => c.whoGave).Include(c => c.whoTake).Where(c => c.whoTake == user);
+            ViewBag.User = user;
+            //List<TrackingTask> tt = new List<TrackingTask>();
+            //foreach(var task in _context.TrackingTasks)
+            //{
+            //    if (task.whoTake == user) tt.Add(task);
+            //}
+            //TaskUserViewModel tuvm = new TaskUserViewModel { User = user, TrackingTasks = tt };
+            return View(tasks);
         }
 
         [Authorize(Roles = "Admin")]

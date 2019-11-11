@@ -55,6 +55,7 @@ namespace JobTrackingSystem.Controllers
             //----пагинация---
             var count = await trackingTasks.CountAsync();
             var items = await trackingTasks.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            //------------
 
             IndexViewModel ivm = new IndexViewModel
             {

@@ -10,5 +10,8 @@ namespace JobTrackingSystem.ViewModels
     {
         public IEnumerable<User> Users { get; set; }
         public IEnumerable<TrackingTask> trackingTasks { get; set; }
+        public FilterViewModel FilterViewModel { get; set; }
+        public SortViewModel SortViewModel { get; set; }
+        public PageViewModel PageViewModel { get; set; }
     }
 }

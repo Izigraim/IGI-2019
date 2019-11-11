@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using JobTrackingSystem.Models;
 using JobTrackingSystem.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Routing;
 
 namespace JobTrackingSystem
 {
@@ -41,6 +42,7 @@ namespace JobTrackingSystem
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TaskContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSignalR();
 
         }
 

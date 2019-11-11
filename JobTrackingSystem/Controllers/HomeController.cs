@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 
 namespace JobTrackingSystem.Controllers
 {
@@ -24,9 +25,46 @@ namespace JobTrackingSystem.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? trackingTask, string name, SortState sortOrder = SortState.dateOfTakingAsc, int page = 1)
         {
-            IndexViewModel ivm = new IndexViewModel { trackingTasks = _context.TrackingTasks.ToList(), Users = _context.Users.ToList() };
+            int pageSize = 5;
+            //----фильтр---
+            IQueryable<TrackingTask> trackingTasks = _context.TrackingTasks.Include(c => c.whoGave).Include(c => c.whoTake);
+            if (trackingTask != null && trackingTask != 0)
+            {
+                trackingTasks = trackingTasks.Where(p => p.Id == trackingTask);
+            }
+            if(!String.IsNullOrEmpty(name))
+            {
+                trackingTasks = trackingTasks.Where(p => p.ShortDescription.Contains(name));
+            }
+            //-----------
+
+            //----сортировка---
+            switch(sortOrder)
+            {
+                case SortState.dateofTakingDesc:
+                    trackingTasks = trackingTasks.OrderByDescending(s => s.dateOfTaking);
+                    break;
+                default:
+                    trackingTasks = trackingTasks.OrderBy(s => s.dateOfTaking);
+                    break;
+            }
+            //------------
+
+            //----пагинация---
+            var count = await trackingTasks.CountAsync();
+            var items = await trackingTasks.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            IndexViewModel ivm = new IndexViewModel
+            {
+                trackingTasks = items,
+                PageViewModel = new PageViewModel(count, page, pageSize),
+                SortViewModel = new SortViewModel(sortOrder),
+                FilterViewModel = new FilterViewModel(_context.TrackingTasks.ToList(), trackingTask, name),
+                Users = _context.Users.ToList()
+            };
+
             return View(ivm);
         } 
 
@@ -185,6 +223,8 @@ namespace JobTrackingSystem.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+            
         }
     }
+
 }

@@ -10,6 +10,15 @@
 </head>
 <body>
     <h3>Список заданий</h3>
+    <form method="get">
+        <div class="form-inline">
+            <label class="control-label">Название: </label>
+            @Html.TextBox("name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
+            <input type="submit" value="Фильтр" class="btn btn-default" /> | 
+            <a asp-action="Index" asp-controller="Home">Назад к полному списку</a>
+
+        </div>
+    </form>
     @if (User.Identity.IsAuthenticated)
     {
         <div>
@@ -22,7 +31,7 @@
                 <td>Задание</td>
                 <td>Статус</td>
                 <td>Кто выдал</td>
-                <td>Дата выдачи</td>
+                <td><a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.DateOfTakingSort)" asp-route-name="@(Model.FilterViewModel.SelectedName)">Дата выдачи</a></td>
                 <td>Кто выполняет</td>
                 <td>Дата завершения</td>
             </tr>
@@ -30,28 +39,53 @@
         <tbody>
             @foreach (var task in Model.trackingTasks)
             {
-            <tr>
-                <td><a asp-controller="Home" asp-action="Details" asp-route-id="@task.Id">@task.ShortDescription</a></td>
-                <td>@task.status</td>
-                <td>@task.whoGave.Nickname</td>
-                <td>@task.dateOfTaking</td>
-                <td>@task.whoTake?.Nickname</td>
-                <td>@task.dateOfFinishing</td>
-                @if (User.Identity.IsAuthenticated && task.whoTake == null)
-                {
-                    <td><a class="btn btn-sm btn-primary" asp-controller="Home" asp-action="TakeTask" asp-route-id="@task.Id">Взять задание</a></td>
-                }
-                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                {
-                    @if (task.dateOfFinishing == null && task.whoTake == null)
+                <tr>
+                    <td><a asp-controller="Home" asp-action="Details" asp-route-id="@task.Id">@task.ShortDescription</a></td>
+                    <td>@task.status</td>
+                    <td>@task.whoGave.Nickname</td>
+                    <td>@task.dateOfTaking</td>
+                    <td>@task.whoTake?.Nickname</td>
+                    <td>@task.dateOfFinishing</td>
+                    @if (User.Identity.IsAuthenticated && task.whoTake == null)
                     {
-                        <td><a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Edit" asp-route-id="@task.Id">Редактировать</a></td>
+                        <td><a class="btn btn-sm btn-primary" asp-controller="Home" asp-action="TakeTask" asp-route-id="@task.Id">Взять задание</a></td>
                     }
-                    <td><a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@task.Id">Удалить</a></td>
-                }
-            </tr>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        @if (task.dateOfFinishing == null && task.whoTake == null)
+                        {
+                            <td><a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Edit" asp-route-id="@task.Id">Редактировать</a></td>
+                        }
+                        <td><a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@task.Id">Удалить</a></td>
+                    }
+                </tr>
             }
         </tbody>
     </table>
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+           asp-route-name="@(Model.FilterViewModel.SelectedName)"
+           asp-route-company="@(Model.FilterViewModel.SelectedTask)"
+           asp-route-sortorder="@(Model.SortViewModel.Current)"
+           class="btn btn-default btn">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Назад
+        </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+           asp-route-name="@(Model.FilterViewModel.SelectedName)"
+           asp-route-company="@(Model.FilterViewModel.SelectedTask)"
+           asp-route-sortorder="@(Model.SortViewModel.Current)"
+           class="btn btn-default btn">
+            Вперед
+            <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
+    }
+    <div class="demo"></div>
 </body>
 </html>

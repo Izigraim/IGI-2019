@@ -10,6 +10,7 @@
 <body>
     <h4>Email: @ViewBag.User.Email</h4>
     <h4>Имя: @ViewBag.User.Nickname</h4>
+    <a href="~/notes.html"><h5>Заметки</h5></a>
     @await Component.InvokeAsync("UserTasksList", ViewBag.User)
 </body>
 </html>

@@ -4,14 +4,16 @@ using JobTrackingSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JobTrackingSystem.Migrations
 {
     [DbContext(typeof(TaskContext))]
-    partial class TaskContextModelSnapshot : ModelSnapshot
+    [Migration("20191111162850_5")]
+    partial class _5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,13 +21,13 @@ namespace JobTrackingSystem.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("JobTrackingSystem.Models.ToDoItem", b =>
+            modelBuilder.Entity("JobTrackingSystem.Models.Note", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsComplete");
+                    b.Property<string>("Content");
 
                     b.Property<string>("Name");
 
@@ -35,7 +37,7 @@ namespace JobTrackingSystem.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("toDoItems");
+                    b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("JobTrackingSystem.Models.TrackingTask", b =>
@@ -232,7 +234,7 @@ namespace JobTrackingSystem.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("JobTrackingSystem.Models.ToDoItem", b =>
+            modelBuilder.Entity("JobTrackingSystem.Models.Note", b =>
                 {
                     b.HasOne("JobTrackingSystem.Models.User", "User")
                         .WithMany()

@@ -10,7 +10,9 @@ namespace JobTrackingSystem.Data
 {
     public class TaskContext : IdentityDbContext<User>
     {
-        public DbSet<TrackingTask> TrackingTasks { get; set; }        
+        public DbSet<TrackingTask> TrackingTasks { get; set; }
+
+        public DbSet<ToDoItem> toDoItems { get; set; }
 
         public TaskContext(DbContextOptions<TaskContext> options) : base(options)
         {

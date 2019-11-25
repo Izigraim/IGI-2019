@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using JobTrackingSystem.Models;
 using JobTrackingSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using JobTrackingSystem.Data;
+using System.Collections.Generic;
 
 namespace CustomIdentityApp.Controllers
 {
@@ -12,9 +14,11 @@ namespace CustomIdentityApp.Controllers
     public class UsersController : Controller
     {
         UserManager<User> _userManager;
+        TaskContext _context;
 
-        public UsersController(UserManager<User> userManager)
+        public UsersController(TaskContext context, UserManager<User> userManager)
         {
+            _context = context;
             _userManager = userManager;
         }
 
@@ -90,6 +94,9 @@ namespace CustomIdentityApp.Controllers
             User user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
+                user.TrackingTasks = _context.TrackingTasks.Where(c => c.whoGave == user).ToList();
+                _context.TrackingTasks.RemoveRange(user.TrackingTasks);
+                await _context.SaveChangesAsync();
                 IdentityResult result = await _userManager.DeleteAsync(user);
             }
             return RedirectToAction("Index");

@@ -14,6 +14,8 @@ using JobTrackingSystem.Models;
 using JobTrackingSystem.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace JobTrackingSystem
 {
@@ -58,9 +60,18 @@ namespace JobTrackingSystem
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
+            app.UseFileServer(new FileServerOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+                RequestPath = "/static",
+                EnableDirectoryBrowsing = true
+            });
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
 

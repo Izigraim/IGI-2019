@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using JobTrackingSystem.Hubs;
 
 namespace JobTrackingSystem
 {
@@ -74,6 +75,10 @@ namespace JobTrackingSystem
             app.UseHttpsRedirection();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<PushNot>("/pushnot");
+            });
 
             app.UseMvc(routes =>
             {

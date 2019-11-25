@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using JobTrackingSystem.Hubs;
 
 namespace JobTrackingSystem.Controllers
 {
@@ -19,10 +20,12 @@ namespace JobTrackingSystem.Controllers
     {
         TaskContext _context;
         UserManager<User> _userManager;
-        public HomeController(TaskContext context, UserManager<User> userManager)
+        IHubContext<PushNot> _hubContext;
+        public HomeController(TaskContext context, UserManager<User> userManager, IHubContext<PushNot> hubContext)
         {
             _context = context;
             _userManager = userManager;
+            _hubContext = hubContext;
         }
 
         public async Task<IActionResult> Index(int? trackingTask, string name, SortState sortOrder = SortState.dateOfTakingAsc, int page = 1)
@@ -84,6 +87,9 @@ namespace JobTrackingSystem.Controllers
             trackingTask.status = "Доступно";
             _context.TrackingTasks.Add(trackingTask);
             _context.SaveChanges();
+
+            await _hubContext.Clients.All.SendAsync("Notify", $"Было создано новое задание - {trackingTask.ShortDescription}");
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -129,6 +135,9 @@ namespace JobTrackingSystem.Controllers
             var task = await _context.TrackingTasks.FindAsync(id);
             _context.TrackingTasks.Remove(task);
             await _context.SaveChangesAsync();
+
+            await _hubContext.Clients.All.SendAsync("Notify", $"Задание {task.ShortDescription} было удалено.");
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -148,7 +157,7 @@ namespace JobTrackingSystem.Controllers
         public async Task<IActionResult> Edit(TrackingTask trackingTask)
         {
             _context.TrackingTasks.Update(trackingTask);
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -194,6 +203,8 @@ namespace JobTrackingSystem.Controllers
 
             _context.TrackingTasks.Update(task);
             await _context.SaveChangesAsync();
+
+            await _hubContext.Clients.All.SendAsync("Notify", $"Пользователь {task.whoTake} выполнил задание {task.ShortDescription}.");
 
             return RedirectToAction(nameof(Index));
         }

@@ -14,7 +14,7 @@
         <div class="form-inline">
             <label class="control-label">Название: </label>
             @Html.TextBox("name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
-            <input type="submit" value="Фильтр" class="btn btn-default" /> | 
+            <input type="submit" value="Фильтр" class="btn btn-default" /> |
             <a asp-action="Index" asp-controller="Home">Назад к полному списку</a>
 
         </div>
@@ -87,5 +87,25 @@
         </a>
     }
     <div class="demo"></div>
+
+    <h3>Действия пользователей:</h3>
+    <div id="notify"></div>
+
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/pushnot").build();
+
+        connection.on('Notify', function (message) {
+
+            let elem = document.createElement("p");
+            elem.appendChild(document.createTextNode(message));
+
+            document.getElementById("notify").appendChild(elem);
+
+        });
+        connection.start();
+    </script>
+    
+
 </body>
 </html>

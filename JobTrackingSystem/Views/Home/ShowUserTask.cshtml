@@ -1,48 +1,50 @@
-﻿@model JobTrackingSystem.Models.TrackingTask
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model JobTrackingSystem.Models.TrackingTask
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = Localizer["Title"];
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Задание </title>
+    <title>@Localizer["Title"]</title>
 </head>
 <body>
     <div>
         <form asp-action="ShowUserTask" asp-controller="Home">
             <div asp-validation-summary="All"></div>
             <div class="form-group">
-                <label asp-for="ShortDescription" class="control-label ">Задание: @Model.ShortDescription</label><br />
+                <label asp-for="ShortDescription" class="control-label ">@Localizer["Title"]: @Model.ShortDescription</label><br />
                 <input type="hidden" asp-for="ShortDescription" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="LongDescription" class="control-label ">Описание задания: @Model.LongDescription</label><br />
+                <label asp-for="LongDescription" class="control-label ">@Localizer["TaskDesc"]: @Model.LongDescription</label><br />
                 <input type="hidden" asp-for="LongDescription" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="whoGave" class="control-label ">Кто выдал: @Model.whoGave.Nickname</label><br />
+                <label asp-for="whoGave" class="control-label ">@Localizer["WhoGave"]: @Model.whoGave.Nickname</label><br />
                 <input type="hidden" asp-for="whoGave" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="dateOfTaking" class="control-label ">Дата выдачи: @Model.dateOfTaking</label><br />
+                <label asp-for="dateOfTaking" class="control-label ">@Localizer["Date1"]: @Model.dateOfTaking</label><br />
                 <input type="hidden" asp-for="dateOfTaking" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="status" class="control-label ">Статус: @Model.status</label><br />
+                <label asp-for="status" class="control-label ">@Localizer["Status"]: @Model.status</label><br />
                 <input type="hidden" asp-for="status" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="whoTake" class="control-label ">Кто выполняет: @Model.whoTake.Nickname</label><br />
+                <label asp-for="whoTake" class="control-label ">@Localizer["WhoTake"]: @Model.whoTake.Nickname</label><br />
                 <input type="hidden" asp-for="whoTake" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="dateOfFinishing" class="control-label ">Дата завершения: @Model.dateOfFinishing</label><br />
+                <label asp-for="dateOfFinishing" class="control-label ">@Localizer["Date2"]: @Model.dateOfFinishing</label><br />
                 <input type="hidden" asp-for="dateOfFinishing" class="form-control" />
             </div>
             @if (Model.dateOfFinishing != null)
             {
                 <div class="form-group">
-                    <label asp-for="Comment" class="control-label ">Коментарий: @Model.Comment</label><br />
+                    <label asp-for="Comment" class="control-label ">@Localizer["Comment"]: @Model.Comment</label><br />
                     <input type="hidden" asp-for="Comment" class="form-control" />
 
                 </div>
@@ -50,14 +52,14 @@
             @if (Model.dateOfFinishing == null)
             {
                 <div class="form-group">
-                    <label asp-for="Comment" class="control-label ">Коментарий:</label><br />
+                    <label asp-for="Comment" class="control-label ">@Localizer["Comment"]:</label><br />
                     <textarea asp-for="Comment" cols="100" rows="10"></textarea>
                 </div>
-                <input type="submit" value="Завершить задание" class="btn btn-default" /><br />
+                <input type="submit" value="@Localizer["ConfirmTask"]" class="btn btn-default" /><br />
             }
         </form>
 
-        <a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Index">Назад на главную страницу</a>
+        <a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Index">@Localizer["Back"]</a>
     </div>
 </body>
 </html>

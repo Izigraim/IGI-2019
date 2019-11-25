@@ -1,34 +1,36 @@
-﻿@model JobTrackingSystem.Models.TrackingTask
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model JobTrackingSystem.Models.TrackingTask
 @{
-    ViewData["Title"] = "Просмотр задания";
+    ViewData["Title"] = Localizer["ShowTask"];
 }
 <html>
 <head>
-    <title>Просмотр задания</title>
+    <title>@Localizer["ShowTask"]</title>
 </head>
 <body>
     <div>
         <ol class="list-group">
-            <li>Задание: @Model.ShortDescription</li>
-            <li>Описание задания: @Model.LongDescription</li>
-            <li>Кто выдал: @Model.whoGave.Nickname</li>
-            <li>Дата выдачи: @Model.dateOfTaking</li>
-            <li>Статус: @Model.status</li>
-            <li>Кто выполняет: @Model.whoTake?.Nickname</li>
-            <li>Дата завершения: @Model.dateOfFinishing</li>
+            <li>@Localizer["Task"]: @Model.ShortDescription</li>
+            <li>@Localizer["TaskDesc"]: @Model.LongDescription</li>
+            <li>@Localizer["WhoGave"]: @Model.whoGave.Nickname</li>
+            <li>@Localizer["Date1"]: @Model.dateOfTaking</li>
+            <li>@Localizer["Status"]: @Model.status</li>
+            <li>@Localizer["WhoTake"]: @Model.whoTake?.Nickname</li>
+            <li>@Localizer["Date2"]: @Model.dateOfFinishing</li>
             @if (User.IsInRole("Admin"))
             {
-                <li>Комментарий:</li>
+        <li>@Localizer["Comment"]:</li>
                 <textarea cols="100" rows="10" readonly>@Model.Comment</textarea>
             }
         </ol>
         @if (User.IsInRole("Admin") && Model.status == "Обрабатывается")
         {
             <div>
-                <a class="btn btn-sm btn-success" asp-controller="Home" asp-action="Confirm" asp-route-id="@Model.Id">Одобрить</a>
+                <a class="btn btn-sm btn-success" asp-controller="Home" asp-action="Confirm" asp-route-id="@Model.Id">@Localizer["Confirm"]</a>
             </div>
             <div>
-                <a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="Deny" asp-route-id="@Model.Id">Отклонить</a>
+                <a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="Deny" asp-route-id="@Model.Id">@Localizer["Decline"]</a>
             </div>
         }
 
@@ -59,6 +61,6 @@
         <script src="~/js/chat.js"></script>*@
 
 
-    <a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Index">Назад на главную страницу</a>
+<a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Index">@Localizer["Back"]</a>
 </body>
 </html>

@@ -17,6 +17,9 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using JobTrackingSystem.Hubs;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using Microsoft.Extensions.Options;
 
 namespace JobTrackingSystem
 {
@@ -39,12 +42,28 @@ namespace JobTrackingSystem
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddDbContext<TaskContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("TaskContextConnection")));
 
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<TaskContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddViewLocalization();
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("ru")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture("ru");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
             services.AddSignalR();
 
         }
@@ -63,6 +82,10 @@ namespace JobTrackingSystem
             }
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
+          
 
             app.UseFileServer(new FileServerOptions
             {

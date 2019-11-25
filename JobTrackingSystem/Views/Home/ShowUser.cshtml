@@ -1,16 +1,17 @@
-﻿@model IEnumerable<TrackingTask>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = Localizer["User"];
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Информация о пользователе</title>
+    <title>@Localizer["User"]</title>
 </head>
 <body>
-    <h4>Email: @ViewBag.User.Email</h4>
-    <h4>Имя: @ViewBag.User.Nickname</h4>
-    <a href="~/notes.html"><h5>Заметки</h5></a>
+    <h4>@Localizer["Email"]: @ViewBag.User.Email</h4>
+    <h4>@Localizer["Name"]: @ViewBag.User.Nickname</h4>
+    <a href="~/notes.html"><h5>@Localizer["Notes"]</h5></a>
     @await Component.InvokeAsync("UserTasksList", ViewBag.User)
 </body>
 </html>

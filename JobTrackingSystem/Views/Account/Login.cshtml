@@ -1,24 +1,26 @@
-﻿@model JobTrackingSystem.ViewModels.LoginViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model JobTrackingSystem.ViewModels.LoginViewModel
 
-<h2>Вход</h2>
+<h2>@Localizer["Entry"]</h2>
 <form method="post" asp-controller="Account" asp-action="Login"
       asp-route-returnUrl="@Model.ReturnUrl">
     <div asp-validation-summary="ModelOnly"></div>
     <div>
-        <label asp-for="Email"></label><br />
+        <label asp-for="Email">@Localizer["Email"]</label><br />
         <input asp-for="Email" />
         <span asp-validation-for="Email"></span>
     </div>
     <div>
-        <label asp-for="Password"></label><br />
+        <label asp-for="Password">@Localizer["Password"]</label><br />
         <input asp-for="Password" />
         <span asp-validation-for="Password"></span>
     </div>
     <div>
-        <label asp-for="RememberMe"></label><br />
+        <label asp-for="RememberMe">@Localizer["Remember"]</label><br />
         <input asp-for="RememberMe" />
     </div>
     <div>
-        <input type="submit" value="Войти" />
+        <input type="submit" value="@Localizer["Login"]" />
     </div>
 </form>

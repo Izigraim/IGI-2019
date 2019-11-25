@@ -1,4 +1,6 @@
-﻿@using JobTrackingSystem.ViewModels
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using JobTrackingSystem.ViewModels
 @model IndexViewModel
 @{
     ViewData["Title"] = "Home Page";
@@ -6,34 +8,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Задания</title>
+    <title>@Localizer["Tasks"]</title>
 </head>
 <body>
-    <h3>Список заданий</h3>
+    <h3>@Localizer["ListOfTasks"]</h3>
     <form method="get">
         <div class="form-inline">
-            <label class="control-label">Название: </label>
+            <label class="control-label">@Localizer["FilterName"] </label>
             @Html.TextBox("name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
-            <input type="submit" value="Фильтр" class="btn btn-default" /> |
-            <a asp-action="Index" asp-controller="Home">Назад к полному списку</a>
+            <input type="submit" value="@Localizer["Filter"]" class="btn btn-default" /> |
+            <a asp-action="Index" asp-controller="Home">@Localizer["BackToList"]</a>
 
         </div>
     </form>
     @if (User.Identity.IsAuthenticated)
     {
         <div>
-            <a asp-action="Create">Добавить новое задание</a>
+            <a asp-action="Create">@Localizer["Add"]</a>
         </div>
     }
     <table class="table">
         <thead>
             <tr>
-                <td>Задание</td>
-                <td>Статус</td>
-                <td>Кто выдал</td>
-                <td><a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.DateOfTakingSort)" asp-route-name="@(Model.FilterViewModel.SelectedName)">Дата выдачи</a></td>
-                <td>Кто выполняет</td>
-                <td>Дата завершения</td>
+                <td>@Localizer["Task"]</td>
+                <td>@Localizer["Status"]</td>
+                <td>@Localizer["WhoGave"]</td>
+                <td><a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.DateOfTakingSort)" asp-route-name="@(Model.FilterViewModel.SelectedName)">@Localizer["Date1"]</a></td>
+                <td>@Localizer["WhoTake"]</td>
+                <td>@Localizer["Date2"]</td>
             </tr>
         </thead>
         <tbody>
@@ -48,15 +50,15 @@
                     <td>@task.dateOfFinishing</td>
                     @if (User.Identity.IsAuthenticated && task.whoTake == null)
                     {
-                        <td><a class="btn btn-sm btn-primary" asp-controller="Home" asp-action="TakeTask" asp-route-id="@task.Id">Взять задание</a></td>
+                        <td><a class="btn btn-sm btn-primary" asp-controller="Home" asp-action="TakeTask" asp-route-id="@task.Id">@Localizer["Take"]</a></td>
                     }
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         @if (task.dateOfFinishing == null && task.whoTake == null)
                         {
-                            <td><a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Edit" asp-route-id="@task.Id">Редактировать</a></td>
+                            <td><a class="btn btn-sm btn-default" asp-controller="Home" asp-action="Edit" asp-route-id="@task.Id">@Localizer["Edit"]</a></td>
                         }
-                        <td><a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@task.Id">Удалить</a></td>
+                        <td><a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@task.Id">@Localizer["Delete"]</a></td>
                     }
                 </tr>
             }
@@ -71,24 +73,24 @@
            asp-route-sortorder="@(Model.SortViewModel.Current)"
            class="btn btn-default btn">
             <i class="glyphicon glyphicon-chevron-left"></i>
-            Назад
+            @Localizer["Back"]
         </a>
     }
     @if (Model.PageViewModel.HasNextPage)
     {
-        <a asp-action="Index"
-           asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
-           asp-route-name="@(Model.FilterViewModel.SelectedName)"
-           asp-route-company="@(Model.FilterViewModel.SelectedTask)"
-           asp-route-sortorder="@(Model.SortViewModel.Current)"
-           class="btn btn-default btn">
-            Вперед
-            <i class="glyphicon glyphicon-chevron-right"></i>
-        </a>
+<a asp-action="Index"
+   asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+   asp-route-name="@(Model.FilterViewModel.SelectedName)"
+   asp-route-company="@(Model.FilterViewModel.SelectedTask)"
+   asp-route-sortorder="@(Model.SortViewModel.Current)"
+   class="btn btn-default btn">
+    @Localizer["Next"]
+    <i class="glyphicon glyphicon-chevron-right"></i>
+</a>
     }
     <div class="demo"></div>
 
-    <h3>Действия пользователей:</h3>
+    <h3>@Localizer["Actions"]:</h3>
     <div id="notify"></div>
     <textarea id="area1" cols="100" rows="10" readonly>@ViewBag.logs</textarea>
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
@@ -107,7 +109,7 @@
         });
         connection.start();
     </script>
-    
+
 
 </body>
 </html>

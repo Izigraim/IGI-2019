@@ -1,12 +1,14 @@
-﻿@model IEnumerable<TrackingTask>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model IEnumerable<TrackingTask>
 <table class="table">
     <thead>
         <tr>
-            <td>Задание</td>
-            <td>Описание задания</td>
-            <td>Статус</td>
-            <td>Дата выдачи</td>
-            <td>Дата завершения</td>
+            <td>@Localizer["TaskName"]</td>
+            <td>@Localizer["TaskDesc"]</td>
+            <td>@Localizer["Status"]</td>
+            <td>@Localizer["Date1"]</td>
+            <td>@Localizer["Date2"]</td>
         </tr>
     </thead>
     <tbody>
@@ -20,7 +22,7 @@
                 <td>@task.dateOfFinishing</td>
                 @if (task.status == "Выполняется")
                 {
-                    <td><a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="DeclineTask" asp-route-id="@task.Id">Отменить задание</a></td>
+                    <td><a class="btn btn-sm btn-danger" asp-controller="Home" asp-action="DeclineTask" asp-route-id="@task.Id">@Localizer["Cancel"]</a></td>
                 }
             </tr>
         }

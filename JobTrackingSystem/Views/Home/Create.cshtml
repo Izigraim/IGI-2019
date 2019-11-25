@@ -1,26 +1,28 @@
-﻿@model JobTrackingSystem.Models.TrackingTask
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model JobTrackingSystem.Models.TrackingTask
 @{
-    ViewData["Title"] = "Новое задание";
+    ViewData["Title"] = Localizer["NewTask"];
 }
 <form asp-action="Create" asp-controller="Home">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="ShortDescription" class="control-label">Название</label><br />
+        <label asp-for="ShortDescription" class="control-label">@Localizer["Name"]</label><br />
         <input type="text" asp-for="ShortDescription" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="LongDescription" class="control-label">Задание</label><br />
+        <label asp-for="LongDescription" class="control-label">@Localizer["Task"]</label><br />
         <input type="text" asp-for="LongDescription" class="form-control" />
     </div>
     @*<div class="form-group">
-        <label asp-for="status" class="control-label">Статус</label><br />
-        <input type="text" asp-for="status" class="form-control" />
-    </div>*@
+            <label asp-for="status" class="control-label">Статус</label><br />
+            <input type="text" asp-for="status" class="form-control" />
+        </div>*@
     <div class="form-group">
         @*<label asp-for="dateOfTaking" class="control-label">Дата выдачи</label><br />*@
         <input type="hidden" asp-for="dateOfTaking" class="form-control" />
     </div>
     <div class="form-group">
-        <input type="submit" value="Добавить" class="btn btn-default" />
+        <input type="submit" value="@Localizer["Add"]" class="btn btn-default" />
     </div>
 </form>

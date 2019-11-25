@@ -14,6 +14,8 @@ namespace JobTrackingSystem.Data
 
         public DbSet<ToDoItem> toDoItems { get; set; }
 
+        public DbSet<Logs> logs { get; set; }
+
         public TaskContext(DbContextOptions<TaskContext> options) : base(options)
         {
         }

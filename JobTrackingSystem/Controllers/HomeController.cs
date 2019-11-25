@@ -60,6 +60,13 @@ namespace JobTrackingSystem.Controllers
             var items = await trackingTasks.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
             //------------
 
+            string logs = null;
+            foreach(Logs log in _context.logs.ToList())
+            {
+                logs += log.Log;
+                logs += "\n";
+            }
+            ViewBag.logs = logs;
             IndexViewModel ivm = new IndexViewModel
             {
                 trackingTasks = items,
@@ -86,10 +93,11 @@ namespace JobTrackingSystem.Controllers
             trackingTask.dateOfTaking = DateTime.Now;
             trackingTask.status = "Доступно";
             _context.TrackingTasks.Add(trackingTask);
+
+            Logs log = new Logs { Log = $"{DateTime.Now} - Было создано новое задание - {trackingTask.ShortDescription}" };
+            _context.logs.Add(log);
             _context.SaveChanges();
-
-            await _hubContext.Clients.All.SendAsync("Notify", $"Было создано новое задание - {trackingTask.ShortDescription}");
-
+            await _hubContext.Clients.All.SendAsync("Notify", $"{DateTime.Now} - Было создано новое задание - {trackingTask.ShortDescription}");
             return RedirectToAction(nameof(Index));
         }
 
@@ -134,9 +142,13 @@ namespace JobTrackingSystem.Controllers
 
             var task = await _context.TrackingTasks.FindAsync(id);
             _context.TrackingTasks.Remove(task);
+           
+
+            Logs log = new Logs { Log = $"{DateTime.Now} - Задание {task.ShortDescription} было удалено." };
+            _context.logs.Add(log);
             await _context.SaveChangesAsync();
 
-            await _hubContext.Clients.All.SendAsync("Notify", $"Задание {task.ShortDescription} было удалено.");
+            await _hubContext.Clients.All.SendAsync("Notify", $"{DateTime.Now} - Задание {task.ShortDescription} было удалено.");
 
             return RedirectToAction(nameof(Index));
         }
@@ -202,9 +214,12 @@ namespace JobTrackingSystem.Controllers
             task.status = "Выполнено";
 
             _context.TrackingTasks.Update(task);
-            await _context.SaveChangesAsync();
+            
 
-            await _hubContext.Clients.All.SendAsync("Notify", $"Пользователь {task.whoTake} выполнил задание {task.ShortDescription}.");
+            Logs log = new Logs { Log = $"{DateTime.Now} - Пользователь {task.whoTake} выполнил задание {task.ShortDescription}." };
+            _context.logs.Add(log);
+            await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("Notify", $"{DateTime.Now} - Пользователь {task.whoTake} выполнил задание {task.ShortDescription}.");
 
             return RedirectToAction(nameof(Index));
         }

@@ -90,18 +90,20 @@
 
     <h3>Действия пользователей:</h3>
     <div id="notify"></div>
-
+    <textarea id="area1" cols="100" rows="10" readonly>@ViewBag.logs</textarea>
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script>
         var connection = new signalR.HubConnectionBuilder().withUrl("/pushnot").build();
 
         connection.on('Notify', function (message) {
 
-            let elem = document.createElement("p");
-            elem.appendChild(document.createTextNode(message));
+            //let elem = document.createElement("p");
+            //elem.appendChild(document.createTextNode(message));
+            //document.getElementById("notify").appendChild(elem);
 
-            document.getElementById("notify").appendChild(elem);
-
+            let elem1 = document.createTextNode(message);
+            document.getElementById("area1").value += elem1.textContent;
+            document.getElementById("area1").value += '\n';
         });
         connection.start();
     </script>

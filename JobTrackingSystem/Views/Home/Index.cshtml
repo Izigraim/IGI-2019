@@ -64,30 +64,8 @@
             }
         </tbody>
     </table>
-    @if (Model.PageViewModel.HasPreviousPage)
-    {
-        <a asp-action="Index"
-           asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
-           asp-route-name="@(Model.FilterViewModel.SelectedName)"
-           asp-route-company="@(Model.FilterViewModel.SelectedTask)"
-           asp-route-sortorder="@(Model.SortViewModel.Current)"
-           class="btn btn-default btn">
-            <i class="glyphicon glyphicon-chevron-left"></i>
-            @Localizer["Back"]
-        </a>
-    }
-    @if (Model.PageViewModel.HasNextPage)
-    {
-<a asp-action="Index"
-   asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
-   asp-route-name="@(Model.FilterViewModel.SelectedName)"
-   asp-route-company="@(Model.FilterViewModel.SelectedTask)"
-   asp-route-sortorder="@(Model.SortViewModel.Current)"
-   class="btn btn-default btn">
-    @Localizer["Next"]
-    <i class="glyphicon glyphicon-chevron-right"></i>
-</a>
-    }
+    <page-link page-model="Model.PageViewModel" page-action="Index"></page-link>
+
     <div class="demo"></div>
 
     <h3>@Localizer["Actions"]:</h3>

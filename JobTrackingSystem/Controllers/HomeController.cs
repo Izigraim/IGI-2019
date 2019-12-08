@@ -123,6 +123,7 @@ namespace JobTrackingSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Route("Profile")]
         public async Task<IActionResult> ShowUser()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -199,6 +200,7 @@ namespace JobTrackingSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Route("/TaskDetails/{id:int}")]
         public IActionResult Details(int? id)
         {
             if (id == null) return NotFound();
